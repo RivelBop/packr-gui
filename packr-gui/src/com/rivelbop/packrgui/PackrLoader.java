@@ -14,13 +14,13 @@ public class PackrLoader {
     public static void main(String[] args) {
         PackrConfig config = new PackrConfig();
         config.platform = PackrConfig.Platform.MacOS;
-        config.jdk = "jdk8u402-b06";
+        config.jdk = "jdk8u402-b06"; //
         //config.jrePath = "jdk8u402-b06/Contents/Home/jre";
-        config.executable = "jApp";
-        config.classpath = Arrays.asList("desktop.jar");
-        config.removePlatformLibs = config.classpath;
-        config.mainClass = "com.rivelbop.packrgui.Main";
-        config.vmArgs = Arrays.asList("Xmx1G", "-XstartOnFirstThread");
+        config.executable = "jApp"; //
+        config.classpath = Arrays.asList("desktop.jar"); //
+        config.removePlatformLibs = config.classpath; //
+        config.mainClass = "com.rivelbop.packrgui.Main"; //
+        config.vmArgs = Arrays.asList("Xmx1G", "-XstartOnFirstThread"); //
         config.minimizeJre = "hard";
         config.outDir = new java.io.File("out-mac");
         config.useZgcIfSupportedOs = true;

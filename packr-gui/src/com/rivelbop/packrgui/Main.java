@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 public class Main extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	private final int WIDTH = 400, HEIGHT = 400;
+	public static final int WIDTH = 640, HEIGHT = 480;
 	
 	public Main() {
 		super("Packr GUI");
@@ -22,19 +22,22 @@ public class Main extends JFrame {
         setContentPane(contentPane);
         
         add(new JLabel("Welcome to Packr GUI!", JLabel.CENTER), BorderLayout.NORTH);
-        add(new MainView());
+        
+        MainView mainView = new MainView();
+        add(mainView);
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
         
         setSize(WIDTH, HEIGHT); 
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH * 2, HEIGHT * 2));
         
         setLocationRelativeTo(null);
         
         pack();
         setVisible(true);
+        mainView.consoleWindow.setVisible(true);
 	}
 	
 	public static void main(String[] args) {

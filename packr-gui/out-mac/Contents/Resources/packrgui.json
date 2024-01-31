@@ -1,0 +1,10 @@
+{
+  "jrePath": "jdk8u402-b06/Contents/Home/jre",
+  "classPath": [
+    "packr-gui.jar"
+  ],
+  "mainClass": "com.rivelbop.packrgui.Main",
+  "useZgcIfSupportedOs": true,
+  "vmArgs": [
+  ]
+}
