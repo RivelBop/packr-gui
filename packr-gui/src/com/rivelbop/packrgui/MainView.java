@@ -86,7 +86,7 @@ public class MainView extends JPanel {
         jarButton = new JButton("Select JAR");
         jarButton.addActionListener(l -> {
         	if(jarChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        		jarFile = jarChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + "/", "");
+        		jarFile = jarChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + Main.PATH_SEPARATOR, "");
         		jarLocationLabel.setText(jarFile);
         		System.out.println("Selected JAR File: " + jarFile);
         	}
@@ -125,7 +125,7 @@ public class MainView extends JPanel {
         jdkButton = new JButton("Select JDK");
         jdkButton.addActionListener(l -> {
         	if(jdkChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        		jdkDir = jdkChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + "/", "");
+        		jdkDir = jdkChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + Main.PATH_SEPARATOR, "");
         		jdkLocationLabel.setText(jdkDir);
         		System.out.println("Selected JDK Directory: " + jdkChooser.getSelectedFile().getAbsolutePath());
         	}
@@ -182,7 +182,7 @@ public class MainView extends JPanel {
         outputButton = new JButton("Select Output");
         outputButton.addActionListener(l -> {
         	if(outputChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        		outputDir = outputChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + "/", "");
+        		outputDir = outputChooser.getSelectedFile().getAbsolutePath().replace(System.getProperty("user.dir") + Main.PATH_SEPARATOR, "");
         		outputLocationLabel.setText(outputDir);
         		System.out.println("Selected Output Directory: " + outputChooser.getSelectedFile().getAbsolutePath());
         	}
@@ -200,7 +200,7 @@ public class MainView extends JPanel {
         console.setForeground(new Color(50, 205, 50));
         console.setEditable(false);
         
-        PrintStream printStream = new PrintStream(new CustomOutputStream(console));
+        PrintStream printStream = new PrintStream(new ConsoleOutputStream(console));
         System.setOut(printStream);
         System.setErr(printStream);
         
@@ -229,9 +229,11 @@ public class MainView extends JPanel {
 					@Override
 					public void run() {
 						PackrConfig config = new PackrConfig();
-		        		config.platform = PackrConfig.Platform.MacOS;
+		        		config.platform = Main.PLATFORM;
 		                config.jdk = jdkDir;
-		                config.jrePath = jdkDir + "/Contents/Home/jre";
+		                config.jrePath = jdkDir + Main.PATH_SEPARATOR +
+		                		"Contents" + Main.PATH_SEPARATOR +
+		                		"Home" + Main.PATH_SEPARATOR + "jre";
 		                config.executable = appNameField.getText();
 		                config.classpath = Arrays.asList(jarFile);
 		                config.removePlatformLibs = config.classpath;
@@ -244,7 +246,7 @@ public class MainView extends JPanel {
 		                
 		                config.vmArgs = Arrays.asList(args);
 		                config.minimizeJre = "hard";
-		                config.outDir = new java.io.File(outputDir + "/out-mac");
+		                config.outDir = new java.io.File(outputDir + Main.PATH_SEPARATOR + "out-" + Main.PLATFORM.toString().toLowerCase());
 		                config.useZgcIfSupportedOs = true;
 		                
 		                try {
@@ -264,7 +266,7 @@ public class MainView extends JPanel {
         
         
         // OS EXPORT NOTE
-        OSLabel = new JLabel(System.getProperty("os.name"), JLabel.CENTER);
+        OSLabel = new JLabel(Main.PLATFORM.toString(), JLabel.CENTER);
         OSLabel.setFont(OSLabel.getFont().deriveFont(Font.PLAIN, 13f));
         add(OSLabel);
     }

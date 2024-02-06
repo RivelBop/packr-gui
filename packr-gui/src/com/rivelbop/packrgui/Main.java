@@ -8,11 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.badlogicgames.packr.PackrConfig.Platform;
+
 // Creates the JFrame/GUI window
 public class Main extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
+	private static final String OS = System.getProperty("os.name").toLowerCase();
 	public static final int WIDTH = 640, HEIGHT = 480;
+	public static final Platform PLATFORM = 
+			OS.contains("windows") ? Platform.Windows64 :
+				OS.contains("mac") ? Platform.MacOS : 
+					Platform.Linux64;
+	public static final String PATH_SEPARATOR = 
+			PLATFORM == Platform.Windows64 ? "\\" : "/";
 	
 	public Main() {
 		super("Packr GUI");
