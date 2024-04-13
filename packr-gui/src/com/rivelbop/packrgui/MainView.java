@@ -27,6 +27,7 @@ import org.apache.commons.compress.compressors.CompressorException;
 
 import com.badlogicgames.packr.Packr;
 import com.badlogicgames.packr.PackrConfig;
+import com.badlogicgames.packr.PackrConfig.Platform;
 
 // GUI structure of the application
 public class MainView extends JPanel {
@@ -231,9 +232,15 @@ public class MainView extends JPanel {
 						PackrConfig config = new PackrConfig();
 		        		config.platform = Main.PLATFORM;
 		                config.jdk = jdkDir;
-		                config.jrePath = jdkDir + Main.PATH_SEPARATOR +
-		                		"Contents" + Main.PATH_SEPARATOR +
-		                		"Home" + Main.PATH_SEPARATOR + "jre";
+		                
+		                if(Main.PLATFORM == Platform.Windows64 || Main.PLATFORM == Platform.Linux64) {
+		                	config.jrePath = jdkDir + Main.PATH_SEPARATOR + "jre";
+		                } else if(Main.PLATFORM == Platform.MacOS) {
+			                config.jrePath = jdkDir + Main.PATH_SEPARATOR +
+			                		"Contents" + Main.PATH_SEPARATOR +
+			                		"Home" + Main.PATH_SEPARATOR + "jre";
+		                }
+		                
 		                config.executable = appNameField.getText();
 		                config.classpath = Arrays.asList(jarFile);
 		                config.removePlatformLibs = config.classpath;

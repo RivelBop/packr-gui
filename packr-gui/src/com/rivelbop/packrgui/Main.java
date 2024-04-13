@@ -19,7 +19,8 @@ public class Main extends JFrame {
 	public static final Platform PLATFORM = 
 			OS.contains("windows") ? Platform.Windows64 :
 				OS.contains("mac") ? Platform.MacOS : 
-					Platform.Linux64;
+					OS.contains("linux") ? Platform.Linux64 :
+						null;
 	public static final String PATH_SEPARATOR = 
 			PLATFORM == Platform.Windows64 ? "\\" : "/";
 	
