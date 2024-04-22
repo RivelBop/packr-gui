@@ -3,6 +3,8 @@ package com.rivelbop.packrgui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.nio.file.FileSystems;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,8 +23,7 @@ public class Main extends JFrame {
 				OS.contains("mac") ? Platform.MacOS : 
 					OS.contains("linux") ? Platform.Linux64 :
 						null;
-	public static final String PATH_SEPARATOR = 
-			PLATFORM == Platform.Windows64 ? "\\" : "/";
+	public static final String PATH_SEPARATOR = FileSystems.getDefault().getSeparator();
 	
 	public Main() {
 		super("Packr GUI");

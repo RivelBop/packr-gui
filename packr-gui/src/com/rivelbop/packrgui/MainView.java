@@ -231,18 +231,16 @@ public class MainView extends JPanel {
 					public void run() {
 						PackrConfig config = new PackrConfig();
 		        		config.platform = Main.PLATFORM;
-		                config.jdk = jdkDir;
+		                config.jdk = toPath(jdkDir);
 		                
 		                if(Main.PLATFORM == Platform.Windows64 || Main.PLATFORM == Platform.Linux64) {
-		                	config.jrePath = jdkDir + Main.PATH_SEPARATOR + "jre";
+		                	config.jrePath = toPath(jdkDir) + "/jre";
 		                } else if(Main.PLATFORM == Platform.MacOS) {
-			                config.jrePath = jdkDir + Main.PATH_SEPARATOR +
-			                		"Contents" + Main.PATH_SEPARATOR +
-			                		"Home" + Main.PATH_SEPARATOR + "jre";
+			                config.jrePath = jdkDir + "/Contents/Home/jre";
 		                }
 		                
 		                config.executable = appNameField.getText();
-		                config.classpath = Arrays.asList(jarFile);
+		                config.classpath = Arrays.asList(toPath(jarFile));
 		                config.removePlatformLibs = config.classpath;
 		                config.mainClass = mainClassField.getText();
 		                
@@ -253,7 +251,7 @@ public class MainView extends JPanel {
 		                
 		                config.vmArgs = Arrays.asList(args);
 		                config.minimizeJre = "hard";
-		                config.outDir = new java.io.File(outputDir + Main.PATH_SEPARATOR + "out-" + Main.PLATFORM.toString().toLowerCase());
+		                config.outDir = new java.io.File(outputDir + Main.PATH_SEPARATOR + "out-" + Main.PLATFORM.toString().toLowerCase() + "-" + appNameField.getText());
 		                config.useZgcIfSupportedOs = true;
 		                
 		                try {
@@ -278,4 +276,14 @@ public class MainView extends JPanel {
         add(OSLabel);
     }
 	
+	// Changes all '\' to '/'
+	private String toPath(String path) {
+		if(Main.PLATFORM != Platform.MacOS) {
+			while(path.contains("\\")) {
+				int backSlash = path.indexOf("\\");
+				path = path.substring(0, backSlash) + "/" + path.substring(backSlash + 1, path.length());
+		    }
+		}
+		return path;
+	}
 }
